@@ -3,6 +3,45 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
+/* ----------------------------------- 封装 ----------------------------------- */
+const http = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API2,
+  timeout: 5000
+})
+
+http.interceptors.request.use(
+  config => {
+    // 如果token存在,赋值header
+    const token = localStorage.getItem('token') || ''
+    if (token) {
+      config.headers['authorization'] = 'Bearer ' + token
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
+
+http.interceptors.response.use(
+  response => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`接口地址: ${response.config.url}`, response.data)
+    }
+    // if (res.data)
+    return response.data
+  },
+  error => {
+    console.log('err' + error) // for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(err)
+  }
+)
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -82,4 +121,4 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export default http

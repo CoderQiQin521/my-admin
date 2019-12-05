@@ -79,9 +79,19 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: '控制台', icon: 'dashboard', affix: true }
       }
     ]
+  },
+  {
+    path: '/category',
+    component: Layout,
+    children: [{
+      path: 'index',
+      component: () => import('@/views/category/list'),
+      name: 'Category',
+      meta: { title: '分类', icon: 'component' }
+    }]
   },
   {
     path: '/documentation',
@@ -91,7 +101,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        meta: { title: '文档', icon: 'documentation', affix: true }
       }
     ]
   },
@@ -104,7 +114,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
+        meta: { title: '引导页', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -118,7 +128,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
   }
@@ -136,7 +146,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
-      title: 'Permission',
+      title: '权限测试页',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -179,7 +189,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/icons/index'),
         name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
+        meta: { title: '图标', icon: 'icon', noCache: true }
       }
     ]
   },
@@ -196,7 +206,7 @@ export const asyncRoutes = [
     redirect: '/example/list',
     name: 'Example',
     meta: {
-      title: 'Example',
+      title: '综合实例',
       icon: 'example'
     },
     children: [
@@ -354,7 +364,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/theme/index'),
         name: 'Theme',
-        meta: { title: 'Theme', icon: 'theme' }
+        meta: { title: '换肤', icon: 'theme' }
       }
     ]
   },
@@ -378,7 +388,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
+        meta: { title: '外链', icon: 'link' }
       }
     ]
   },
