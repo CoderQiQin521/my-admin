@@ -2,16 +2,25 @@
   <div class="app-container">
     <el-table :data="tableData" border stripe style="width: 100%">
       <el-table-column prop="_id" label="id" width="240" />
-      <el-table-column prop="name" label="分类名称" />
-      <el-table-column prop="createdAt" label="创建时间" />
-      <el-table-column prop="updatedAt" label="修改时间" />
+      <el-table-column prop="title" label="文章名称" />
+      <el-table-column prop="parent" label="所属分类">
+        <template slot-scope="scope">
+          <el-tag
+            type="info"
+            style="margin-right:4px"
+            size="mini"
+            v-for="tag in scope.row.parent"
+            :key="tag._id"
+          >{{tag.name}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
           <el-button-group>
             <el-button
               type="primary"
               plain
-              @click="$router.push(`/categories/edit/${scope.row._id}`)"
+              @click="$router.push(`/article/edit/${scope.row._id}`)"
             >编辑</el-button>
             <el-button type="danger" plain @click="remove(scope.row)">删除</el-button>
           </el-button-group>
@@ -22,7 +31,7 @@
 </template>
 
 <script>
-import { category } from '@/api/category'
+import { fetchList, deleteArticle } from '@/api/article'
 export default {
   data() {
     return {
@@ -34,13 +43,14 @@ export default {
   },
   methods: {
     async fetch() {
-      const res = await category()
+      let res = await fetchList()
       this.tableData = res
     },
     remove(row) {
-      this.$confirm(`是否确定删除分类 "${row.name}"`, '提示', {}).then(
+      console.log('row: ', row)
+      this.$confirm(`是否确定删除文章 "${row.title}"`, '提示', {}).then(
         async () => {
-          await this.$http.delete(`/rest/categories/${row._id}`, row)
+          await deleteArticle(row._id)
           // let index = this.list.findIndex(item => item._id === row._id);
           // this.list.splice(index, 1)
           // this.$delete(this.list, index);

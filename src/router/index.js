@@ -94,6 +94,33 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/article',
+    component: Layout,
+    meta: {
+      title: '文章管理',
+      icon: 'documentation'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/article/new'),
+      name: 'article',
+      meta: { title: '新建文章' }
+    },
+    {
+      path: 'edit/:id',
+      component: () => import('@/views/article/new'),
+      name: 'edit',
+      hidden: true,
+      meta: { title: '编辑文章' }
+    },
+    {
+      path: 'list',
+      component: () => import('@/views/article/list'),
+      name: 'articlelist',
+      meta: { title: '文章列表' }
+    }]
+  },
+  {
     path: '/documentation',
     component: Layout,
     children: [
